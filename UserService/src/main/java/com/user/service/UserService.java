@@ -26,7 +26,9 @@ public class UserService {
 	
 	public List<User> getAllUser(){
 		List<User> users = userRepo.findAll();
-		users.forEach(user -> { ResponseEntity<List<Rating>> ratingOfUsers = restTemplate.exchange("http://localhost:8082/ratings/users/"+user.getUserId(),HttpMethod.GET, null, 
+		users.forEach(user -> { ResponseEntity<List<Rating>> ratingOfUsers = restTemplate.exchange("http://localhost:8082/ratings/users/"+user.getUserId(),
+				HttpMethod.GET, 
+				null, 
 				new ParameterizedTypeReference<List<Rating>>(){});
 		        List<Rating> ratings = ratingOfUsers.getBody();
 		        user.setRatings(ratings);
