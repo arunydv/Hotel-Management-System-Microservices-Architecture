@@ -3,10 +3,12 @@ package com.user.application;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 @ComponentScan({"com.hotel.service","com.hotel.exception","com.hotel.controller"})
 @EnableJpaRepositories("com.hotel.repository")
 @EntityScan("com.hotel.model")
