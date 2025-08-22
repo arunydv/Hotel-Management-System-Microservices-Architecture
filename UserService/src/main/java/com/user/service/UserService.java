@@ -25,7 +25,13 @@ public class UserService {
 	private RestTemplate restTemplate;
 	
 	public List<User> getAllUser(){
-		return userRepo.findAll();
+		List<User> users = userRepo.findAll();
+		users.forEach(user -> { ResponseEntity<List<Rating>> ratingOfUsers = restTemplate.exchange("http://localhost:8082/ratings/users/"+user.getUserId(),HttpMethod.GET, null, 
+				new ParameterizedTypeReference<List<Rating>>(){});
+		        List<Rating> ratings = ratingOfUsers.getBody();
+		        user.setRatings(ratings);
+		});
+		return users;
 	}
 	
 	public User saveUser(User user) {
