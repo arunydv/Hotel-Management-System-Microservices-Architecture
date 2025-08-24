@@ -7,6 +7,15 @@ spring:
       database: microservice
   application:
     name: RATING-SERVICE
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core: DEBUG
+      mongodb:
+        driver: DEBUG 
 eureka:
   instance:
     prefer-ip-address: true
@@ -14,4 +23,5 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     eureka-server-u-r-l-context: http://localhost:8761/Eureka
+
     

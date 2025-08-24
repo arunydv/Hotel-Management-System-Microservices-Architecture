@@ -21,7 +21,7 @@ public class HotelService {
 	}
 	
 	public Hotel getHotelById(String id) {
-		return hotelRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hoetl not found!!"));
+		return hotelRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hotel not found!!"));
 	}
 	
 	public Hotel createHotel(Hotel hotel) {
