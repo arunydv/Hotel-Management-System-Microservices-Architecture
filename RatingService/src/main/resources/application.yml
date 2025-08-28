@@ -24,4 +24,32 @@ eureka:
     register-with-eureka: true
     eureka-server-u-r-l-context: http://localhost:8761/Eureka
 
+management:
+   health:
+     circuitbreakers:
+        enabled: true
+   endpoints:
+     web:
+        exposure:
+          include: health
+
+   endpoint:
+     health:
+        show-details: always
+
+
+resilience4j:
+  circuitbreaker:
+    instances:
+     usersHotelBreaker:
+        registerHealthIndicator : true
+        eventConsumerBufferSize : 10
+        failureRateThreshold : 50
+        minimumNumberOfCalls : 5
+        waitDurationInOpenState : 6s
+        permittedNumberOfCallsInHalfOpenState : 3
+        automaticTransitionFromOpenToHalfOpenEnabled : true
+        slidingWindowSize : 10
+        slidingWindowType : COUNT_BASED 
+
     

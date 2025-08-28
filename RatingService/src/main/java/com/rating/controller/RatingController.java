@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rating.model.Rating;
 import com.rating.service.RatingService;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import jakarta.ws.rs.core.Response;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,8 +39,13 @@ public class RatingController {
 	}
 	
 	@GetMapping("/users/{userId}")
+	@CircuitBreaker(name = "usersHotelBreaker", fallbackMethod = "usersHotels")
 	public ResponseEntity<List<Rating>> userById(@PathVariable String userId) {
 		return ResponseEntity.ok(ratingService.findByUser(userId));
+	}
+	
+	public ResponseEntity<List<Rating>> usersHotels(String userId, Exception e){
+		return ResponseEntity.ok(ratingService.findByUserFallBack(userId));
 	}
 	
 	@GetMapping("/hotels/{hotelId}")

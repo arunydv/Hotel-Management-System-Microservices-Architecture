@@ -45,4 +45,8 @@ public class RatingService {
 	public List<Rating> findByHotel(String hotelId){
 		return ratingRepo.findByHotelId(hotelId);
 	}
+
+	public List<Rating> findByUserFallBack(String userId) {
+		return ratingRepo.findByUserId(userId);
+	}
 }
