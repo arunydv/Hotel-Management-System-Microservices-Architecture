@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableMongoRepositories("com.rating.repository")
-@ComponentScan(basePackages = {"com.rating.controller","com.rating.service"})
+@ComponentScan(basePackages = {"com.rating.controller","com.rating.service","com.rating.config"})
 public class RatingServiceApplication {
 
 	public static void main(String[] args) {

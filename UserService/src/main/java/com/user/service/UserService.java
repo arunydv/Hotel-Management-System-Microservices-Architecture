@@ -33,16 +33,8 @@ public class UserService {
 				HttpMethod.GET, 
 				null, 
 				new ParameterizedTypeReference<List<Rating>>(){});
-		        List<Rating> ratings = ratingOfUsers.getBody();
-		        ratings.forEach(rating -> {ResponseEntity<Hotel> ratingOfHotels = restTemplate.exchange("http://HOTELSERVICE/hotels/"+rating.getHotelId(),
-		        		HttpMethod.GET,
-		        		null,
-		        		new ParameterizedTypeReference<Hotel>(){
-						});
-		                rating.setHotel(ratingOfHotels.getBody());
+		        user.setRatings(ratingOfUsers.getBody());
 		        });
-		        user.setRatings(ratings);
-		});
 		
 		return users;
 	}
@@ -58,15 +50,15 @@ public class UserService {
         ResponseEntity<List<Rating>> ratingsOfUsers =  restTemplate.exchange("http://RATINGSERVICE/ratings/users/"+user.getUserId(),
         		HttpMethod.GET, null,
         		new ParameterizedTypeReference<List<Rating>>(){});
-        List<Rating> ratings = ratingsOfUsers.getBody();
-        ratings.forEach(rating -> {ResponseEntity<Hotel>  ratingOfHotels = restTemplate.exchange("http://HOTELSERVICE/hotels/"+rating.getHotelId(),
-        		HttpMethod.GET,
-        		null,
-        		new ParameterizedTypeReference<Hotel>() {
-				});
-                rating.setHotel(ratingOfHotels.getBody());
-        });
-        user.setRatings(ratings);
+        user.setRatings(ratingsOfUsers.getBody());
 	    return user;
+	}
+	
+	public User fallbackuser(String userId) {
+		return userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User does not exist"));
+	}
+
+	public List<User> getAllUserFallBack() {
+		return userRepo.findAll();
 	}
 }
