@@ -32,12 +32,13 @@ public class RatingService {
 	
 	public List<Rating> findByUser(String userId){
 		 List<Rating> ratings = ratingRepo.findByUserId(userId);
-		 ratings.forEach(rating ->{ResponseEntity<Hotel> hotel = restTemplate.exchange("http://HOTELSERVICE/hotels/"+rating.getHotelId()
+		 ratings.forEach(rating ->{ResponseEntity<Hotel> hotel = restTemplate.exchange("http://HOTEL-SERVICE/hotels/"+rating.getHotelId()
 		        ,HttpMethod.GET
 				,null
 				,new ParameterizedTypeReference<Hotel>() {
 				});
 		        rating.setHotel(hotel.getBody());
+		        System.out.println("Executed");
 		 });
 		 return ratings;
 	}

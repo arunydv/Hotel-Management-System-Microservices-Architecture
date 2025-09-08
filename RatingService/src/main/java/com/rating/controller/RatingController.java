@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,7 @@ public class RatingController {
 		return ResponseEntity.ok(ratingService.getAllRatings());
 	}
 	
+    @PreAuthorize("hasAuthority('SCOPE_internal')")
 	@GetMapping("/users/{userId}")
 	@CircuitBreaker(name = "usersHotelBreaker", fallbackMethod = "usersHotels")
 	public ResponseEntity<List<Rating>> userById(@PathVariable String userId) {
@@ -45,6 +47,7 @@ public class RatingController {
 	}
 	
 	public ResponseEntity<List<Rating>> usersHotels(String userId, Exception e){
+		e.getMessage();
 		return ResponseEntity.ok(ratingService.findByUserFallBack(userId));
 	}
 	

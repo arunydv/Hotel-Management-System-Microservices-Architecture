@@ -50,6 +50,7 @@ public class UserController {
 	}
 	
 	public ResponseEntity<User> ratingHotelFallback(String userId, Exception e){
+		
 		User user = userService.fallbackuser(userId);
 		return ResponseEntity.ok(user);
 	}

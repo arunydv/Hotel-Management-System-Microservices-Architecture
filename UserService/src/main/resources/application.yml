@@ -13,6 +13,30 @@ spring:
     show-sql: true
   application:
     name: USER-SERVICE
+  security:
+    oauth2:
+      client:
+        registration:       
+          internal-service:
+           authorization-grant-type: client_credentials
+           client-id: 0oav0el41ysalxu8a697
+           client-secret: WOxjdYGKMFVCj5d_oCnPb2tC_fa91SsZpoPS4e1D8wp9X3rYQwRVAj4mtSwBKK12
+           provider: okta
+           scope:
+            - internal
+        provider:
+          okta:
+            issuer-uri: https://integrator-4084965.okta.com/oauth2/default
+      resourceserver:
+        jwt:
+          issuer-uri: https://integrator-4084965.okta.com/oauth2/default
+          audiences:
+          - api://default
+logging:
+  level:
+     org.springframework.security.oauth2: DEBUG
+     org.springframework.web.client.RestTemplate: DEBUG
+
 eureka:
   instance:
     prefer-ip-address: true
@@ -20,6 +44,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     eureka-server-u-r-l-context: http://localhost:8761/Eureka
+
 
 management:
   health:

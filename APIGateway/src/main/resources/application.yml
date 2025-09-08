@@ -12,12 +12,12 @@ spring:
         - Path=/users/**
 
       - id: HOTELSERVICE
-        uri: lb://HOTELSERVICE
+        uri: lb://HOTEL-SERVICE
         predicates:
         - Path=/hotels/**
 
       - id: RATINGSERVICE
-        uri: lb://RATINGSERVICE
+        uri: lb://RATING-SERVICE
         predicates:
         - Path=/ratings/**
 

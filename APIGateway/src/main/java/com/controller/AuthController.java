@@ -26,7 +26,6 @@ public class AuthController {
 			@AuthenticationPrincipal OidcUser user, Model model
 			){
 		
-		System.out.println("Request Coming");
 		AuthResponse authResponse = new AuthResponse();
 		
 		authResponse.setUserId(user.getEmail());

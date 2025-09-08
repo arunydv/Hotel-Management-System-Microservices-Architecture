@@ -29,11 +29,12 @@ public class UserService {
 	public List<User> getAllUser(){
 		
 			List<User> users = userRepo.findAll();
-		users.forEach(user -> { ResponseEntity<List<Rating>> ratingOfUsers = restTemplate.exchange("http://RATINGSERVICE/ratings/users/"+user.getUserId(),
+		users.forEach(user -> { ResponseEntity<List<Rating>> ratingOfUsers = restTemplate.exchange("http://RATING-SERVICE/ratings/users/"+user.getUserId(),
 				HttpMethod.GET, 
 				null, 
 				new ParameterizedTypeReference<List<Rating>>(){});
 		        user.setRatings(ratingOfUsers.getBody());
+		        System.out.println("executed");
 		        });
 		
 		return users;
@@ -47,10 +48,11 @@ public class UserService {
 	
 	public User getUser(String userId) {
         User user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User does not exist"));
-        ResponseEntity<List<Rating>> ratingsOfUsers =  restTemplate.exchange("http://RATINGSERVICE/ratings/users/"+user.getUserId(),
+        ResponseEntity<List<Rating>> ratingsOfUsers =  restTemplate.exchange("http://RATING-SERVICE/ratings/users/"+user.getUserId(),
         		HttpMethod.GET, null,
         		new ParameterizedTypeReference<List<Rating>>(){});
         user.setRatings(ratingsOfUsers.getBody());
+        System.out.println("Normal service to get user by id");
 	    return user;
 	}
 	
