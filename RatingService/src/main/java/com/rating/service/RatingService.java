@@ -38,7 +38,6 @@ public class RatingService {
 				,new ParameterizedTypeReference<Hotel>() {
 				});
 		        rating.setHotel(hotel.getBody());
-		        System.out.println("Executed");
 		 });
 		 return ratings;
 	}

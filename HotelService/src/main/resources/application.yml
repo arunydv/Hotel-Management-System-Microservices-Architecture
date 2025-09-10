@@ -11,6 +11,13 @@ spring:
     show-sql: true
   application:
     name: HOTEL-SERVICE
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://integrator-4084965.okta.com/oauth2/default
+          audiences:
+          - api://default
 
 eureka:
   instance:

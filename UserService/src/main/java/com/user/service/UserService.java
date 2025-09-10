@@ -34,7 +34,6 @@ public class UserService {
 				null, 
 				new ParameterizedTypeReference<List<Rating>>(){});
 		        user.setRatings(ratingOfUsers.getBody());
-		        System.out.println("executed");
 		        });
 		
 		return users;
@@ -52,8 +51,7 @@ public class UserService {
         		HttpMethod.GET, null,
         		new ParameterizedTypeReference<List<Rating>>(){});
         user.setRatings(ratingsOfUsers.getBody());
-        System.out.println("Normal service to get user by id");
-	    return user;
+        return user;
 	}
 	
 	public User fallbackuser(String userId) {

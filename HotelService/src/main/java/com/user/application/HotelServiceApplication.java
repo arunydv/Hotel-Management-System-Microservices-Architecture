@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan({"com.hotel.service","com.hotel.exception","com.hotel.controller"})
+@ComponentScan({"com.hotel.service","com.hotel.exception","com.hotel.controller","com.hotel.config"})
 @EnableJpaRepositories("com.hotel.repository")
 @EntityScan("com.hotel.model")
 public class HotelServiceApplication {

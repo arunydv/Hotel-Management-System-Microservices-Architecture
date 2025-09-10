@@ -1,12 +1,23 @@
 package com.rating.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,6 +25,11 @@ import org.springframework.web.client.RestTemplate;
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class RatingConfig {
+	
+	@Autowired
+	private OAuth2AuthorizedClientRepository auth2AuthorizedClientRepository;
+	@Autowired
+	private ClientRegistrationRepository clientRegistrationRepository;
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
@@ -25,7 +41,20 @@ public class RatingConfig {
 	
 	@Bean
 	@LoadBalanced
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
+	RestTemplate restTemplate() {
+		List<ClientHttpRequestInterceptor> interceptor = new ArrayList<>();
+		interceptor.add(new RestTemplateInterceptor(manager(auth2AuthorizedClientRepository, clientRegistrationRepository)));
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setInterceptors(interceptor);
+		return restTemplate;
+	}
+	
+	@Bean
+	OAuth2AuthorizedClientManager manager(OAuth2AuthorizedClientRepository auth2AuthorizedClientRepository,
+			ClientRegistrationRepository clientRegistrationRepository) {
+		OAuth2AuthorizedClientProvider provider = OAuth2AuthorizedClientProviderBuilder.builder().clientCredentials().build();
+    	DefaultOAuth2AuthorizedClientManager defaultOAuth2AuthorizedClientManager = new DefaultOAuth2AuthorizedClientManager(clientRegistrationRepository, auth2AuthorizedClientRepository);
+    	defaultOAuth2AuthorizedClientManager.setAuthorizedClientProvider(provider);
+    	return defaultOAuth2AuthorizedClientManager;
 	}
 }
