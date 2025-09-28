@@ -1,5 +1,5 @@
 <H2>Hotel Rating Management System</H2>
-<span>A scalable microservices architecture for managing ratings of hotels rated buy users built with Spring Boot and Spring Cloud.</span>
+<span>A scalable microservices architecture for managing ratings of hotels rated by users built with Spring Boot and Spring Cloud.</span>
 <H2>🚀 About the Project</H2>
 <span>The project consist of three following services
 	<ul style="list-style-type:disc">
