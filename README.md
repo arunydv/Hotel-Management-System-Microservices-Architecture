@@ -4,8 +4,8 @@
 <span>The project consist of three following services
 	<ul style="list-style-type:disc">
 		<li><b>User Service : </b>This service deals with user related functionlities while using MySQL as database</li>
-		<li><b>Hotel Service : </b>This service deals with Hotel records related functionlities while using MongoDB as database</li>
-		<li><b>Ratings Service : </b>This service stores the records related to ratings given by user based on the userId and hotelId while using PostgreSQL as database</li>
+		<li><b>Hotel Service : </b>This service deals with Hotel records related functionlities while using PostgreSQL as database</li>
+		<li><b>Ratings Service : </b>This service stores the records related to ratings given by user based on the userId and hotelId while using MongoDB as database</li>
 	</ul>
 	All the services are secured using OKTA as authentication as well as authorization server. The main goal behind this project is to mimic real world system architecture from a beginners perspective.
 </span>
